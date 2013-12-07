@@ -1,0 +1,32 @@
+{
+  "name": "expressionBuilder",
+  "title": "Expressionbuilder",
+  "description": "Plugin for constructing valid expressions using Select2.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jonmbake/expressionBuilder",
+  "author": {
+    "name": "Jon Bake",
+    "email": "jonmbake@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jonmbake/expressionBuilder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jonmbake/expressionBuilder/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jonmbake/expressionBuilder/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "~1.7",
+    "bootstrap": "~3.0.2",
+    "select2": "~3.4.4",
+    "underscore": "~1.4.4"
+  },
+  "keywords": [
+  ]
+}
