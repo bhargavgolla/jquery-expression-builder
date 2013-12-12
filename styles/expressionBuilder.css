@@ -1,18 +1,9 @@
 .exprBldrMain {
   position: relative;
-  /*padding: 45px 15px 15px;*/
-  margin: 10px;
-  /*
-  background-color: #fafafa;
-  box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
-  border-color: #e5e5e5 #eee #eee;
-  border-style: solid;
-  border-width: 1px 0;
-  */
   width: 500px;
 }
 
-.exprOuter {
+.exprBldrMain .exprOuter {
   margin-bottom: 10px;
   border-bottom: 1px solid #bbb;
   padding: 5px 0;
@@ -20,41 +11,41 @@
   border: 1px solid #eee;
 }
 
-input {
+.exprBldrMain .exprInner input {
   width: 70px;
 }
 
-input.subExprActive {
+.exprBldrMain .exprInner input.subExprActive {
     outline: none;
     border-color: #9ecaed;
     box-shadow: 0 0 10px #9ecaed;
 }
 
-.exprInner {
+.exprBldrMain .exprInner {
   margin: 0 auto;
 }
 
-.bldrBottom {
+.exprBldrMain .bldrBottom {
   padding-top: 10px;
   height:100%;
   overflow:hidden;
 }
 
-.select2-results .select2-disabled {
+.exprBldrMain .select2-results .select2-disabled {
   display: none;
 }
 
-.input-group-addon.input-small:last-child {
+.exprBldrMain .input-group-addon.input-small:last-child {
   padding-left: 0;
 }
 
-.input-group-addon:not(:first-child):not(:last-child) {
+.exprBldrMain .input-group-addon:not(:first-child):not(:last-child) {
   border-left: 0;
   border-right: 0;
   padding-left: 2px;
   padding-right: 2px;
 }
 
-.helpDescription {
+.exprBldrMain .helpDescription {
   display: block;
 }

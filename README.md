@@ -92,12 +92,13 @@ Methods can be invoked on the Expression Builder by using the following syntax: 
 
 The following methods are available:
 
-Method          | Description
---------------- | ------------
-getExpression   | Get the expression value of the current expression.
-getJSON         | Get the JSON representation of the current expression.  This is what gets saved when persisting a template.
-clear           | Reset the current expression back to its starting state.
-saveAsTemplate  | Save the current expression as a template
+Method          | Description                                                                                                    | Arguments
+--------------- | -------------------------------------------------------------------------------------------------------------- | ---------
+getExpression   | Get the expression value of the current expression.                                                            | NONE
+getJSON         | Get the JSON representation of the current expression.  This is what gets saved when persisting a template.    | NONE
+clear           | Reset the current expression back to its starting state.                                                       | NONE 
+saveAsTemplate  | Save the current expression as a template                                                                      | NONE
+changeStartType | Change the start type.                                                                                         | type
 
 ## Release History
 0.1.0 - Initial Release - Support for basic expression builder and saving templates.

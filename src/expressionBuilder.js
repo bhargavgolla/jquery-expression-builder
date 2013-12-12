@@ -980,6 +980,7 @@
         }
       };
       this.s$ = s$;
+      this.expressionReturnType = this.options.returnType;
       this.addStartSubExpresion();
 
       this.selectElementCollection = new SelectElementCollection(subExprsGrouped, this.getTemplates(), s$);
@@ -1065,7 +1066,7 @@
      * Get things started by adding type component for expression return type.
      */
     addStartSubExpresion: function () {
-      this.startSubExpression = new TypeComponent(this.s$, this.options.returnType);
+      this.startSubExpression = new TypeComponent(this.s$, this.expressionReturnType);
       this.s$('div.exprInner input:first').remove();
       this.startSubExpression.focusNextInput();
     },
@@ -1168,6 +1169,10 @@
     },
     getTemplates: function () {
       return this.data('expressionBuilder').getTemplates();
+    },
+    changeStartType: function (type) {
+      this.data('expressionBuilder').expressionReturnType = type;
+      this.data('expressionBuilder').clear();
     }
   };
 
