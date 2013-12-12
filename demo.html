@@ -52,18 +52,13 @@
      },
      {'groupName': 'Numerical Aggregate Functions',
        'values': [
-         {'displayName': 'Min', 'expressionValue':'min', 'description': 'Get the minimum number from a list of numbers', 'rightType': '(NUMBER...)', 'returnType': 'NUMBER'},
-         {'displayName': 'Max', 'expressionValue':'max', 'description': 'Get the maximum number from a list of numbers', 'rightType': '(NUMBER...)', 'returnType': 'NUMBER'}
+         {'displayName': 'Min', 'expressionValue':'Math.min', 'description': 'Get the minimum number from a list of numbers', 'rightType': '(NUMBER...)', 'returnType': 'NUMBER'},
+         {'displayName': 'Max', 'expressionValue':'Math.max', 'description': 'Get the maximum number from a list of numbers', 'rightType': '(NUMBER...)', 'returnType': 'NUMBER'}
        ]
      },
      {'groupName': 'Date Functions',
        'values': [
-         {'displayName': 'parseDate', 'expressionValue':'minutesBetween', 'description': 'Parse ', 'rightType': '(TEMPORAL, TEMPORAL)', 'returnType': 'NUMBER'},
-         {'displayName': 'HoursBetween', 'expressionValue':'hoursBetween', 'description': 'Get the number of hours between date 1 and date 2', 'rightType': '(TEMPORAL, TEMPORAL)', 'returnType': 'NUMBER'},
-         {'displayName': 'DaysBetween', 'expressionValue':'daysBetween', 'description': 'Get the number of days between date 1 and date 2', 'rightType': '(TEMPORAL, TEMPORAL)', 'returnType': 'NUMBER'},
-         {'displayName': 'MonthsBetween', 'expressionValue':'monthsBetween', 'description': 'Get the number of months between date 1 and date 2', 'rightType': '(TEMPORAL, TEMPORAL)', 'returnType': 'NUMBER'},
-         {'displayName': 'YearsBetween', 'expressionValue':'yearsBetween', 'description': 'Get the number of years between date 1 and date 2', 'rightType': '(TEMPORAL, TEMPORAL)', 'returnType': 'NUMBER'},
-         {'displayName': 'Now', 'expressionValue':'now', 'description': 'Get the current date', 'rightType': '()', 'returnType': 'TEMPORAL'}
+         {'displayName': 'parseDate', 'expressionValue':'Date.parse', 'description': 'Parse a date in the form: January 1, 1970', 'rightType': '(TEXT)', 'returnType': 'TEMPORAL'}
        ]
      },
       {'groupName': 'Number Functions',
@@ -83,11 +78,11 @@
             $(this).toggleClass("active");
             $("div#exprBldr").expressionBuilder('changeStartType', $(this).text());
         });
-       $("div#exprBldr").on('eb-expression-complete', function (event, eventArgs) {
+       $("div#exprBldr").on('eb-expression-complete', function () {
           console.log('ex com');
           $("#evalBtn").show();
         });
-        $("div#exprBldr").on('eb-clear', function (event, eventArgs) {
+        $("div#exprBldr").on('eb-clear', function () {
           $(".evalElem").hide();
         });
         $("#evalBtn").click(function() {
@@ -99,53 +94,17 @@
   </script> 
 </head>
 <body>
-          <div>
-            <div style="width: 50%; margin: 0 auto">
-            <label>Expression Return Type:</label>
-            <div id="exprReturnTypeSelect" class="btn-group" style="margin: 20px 0px;">
-          <button type="button" class="btn btn-default active">NUMBER</button>
-          <button type="button" class="btn btn-default">BOOLEAN</button>
-        </div>
-        <div id="exprBldr">
-        </div>
-        <button type="button" id="evalBtn" class="evalElem btn btn-primary btn-lg" style="display: none">Evaluate Expression</button>
-        <div class="evalElem alert alert-success" style="display: none; margin-top: 10px">The Expression Evaluates to <span id="exprEvalValue"><span></div>
+  <div>
+    <div style="width: 50%; margin: 0 auto">
+      <label>Expression Return Type:</label>
+      <div id="exprReturnTypeSelect" class="btn-group" style="margin: 20px 0px;">
+        <button type="button" class="btn btn-default active">NUMBER</button>
+        <button type="button" class="btn btn-default">BOOLEAN</button>
       </div>
-      
+      <div id="exprBldr"></div>
+      <button type="button" id="evalBtn" class="evalElem btn btn-primary btn-lg" style="display: none">Evaluate Expression</button>
+      <div class="evalElem alert alert-success" style="display: none; margin-top: 10px">The Expression Evaluates to <span id="exprEvalValue"><span></div>
     </div>
-    
-    <!--
-      <p class="lead">You can even reference fields within the expression...</p>
-        <form class="form" role="form">
-  <div class="form-group">
-    <label for="exampleInputEmail1">Number Field 1</label>
-    <input type="email" class="form-control" id="numberField1" placeholder="Enter a Number">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Number Field 2</label>
-    <input type="email" class="form-control" id="numberField2" placeholder="Enter a Number">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Text Field 1</label>
-    <input type="email" class="form-control" id="textField1" placeholder="Enter Some Text">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Text Field 2</label>
-    <input type="email" class="form-control" id="textField2" placeholder="Enter Some Text">
-  </div>
-   <div class="form-group">
-    <label for="exampleInputEmail1">Date Field 1</label>
-    <input type="email" class="form-control" id="dateField1" placeholder="Enter a Date">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Date Field 2</label>
-    <input type="email" class="form-control" id="dateField2" placeholder="Enter a Date">
-  </div>
-</form>
--->
-  
-    </div>
-  
   </div>
 </body>
 </html>

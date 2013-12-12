@@ -1,13 +1,7 @@
-# Expressionbuilder
+# jQuery Expression Builder
 
-A JQuery Plugin for constructing valid DSL expressions.  Expressions are constructed by recursively chosing sub-expressions until the expression is complete.
+A jQuery Plugin for constructing valid DSL expressions.  Expressions are constructed by recursively chosing sub-expressions until the expression is complete.
 Support is included for saving Expression Templates (expressions with sub-expressions yet to be chosen).
-
-## Getting Started
-Download the [production version][min] or the [development version][max].
-
-[min]: https://raw.github.com/jonmbake/expressionBuilder/master/dist/expressionBuilder.min.js
-[max]: https://raw.github.com/jonmbake/expressionBuilder/master/dist/expressionBuilder.js
 
 ### Dependencies
 
@@ -34,7 +28,7 @@ The Expression Builder uses bootstrap 3 for styling, underscore.js as a javascip
 
 ## Documentation
 
-The best way to learn about the expression builder is to view the well-commented source.
+The best way to learn about the expression builder is to view the [Well-Commented Source](./src/expressionBuilder.js) or the [Demo](./demo.html).
 
 The basic idea of the Expression Builder is to use the type system of the language to build an expression in a more structured way.  This is done by recursively chosing a sub-expressions until the expression is complete. Sub-expressions available for selection are filtered by return type given the expected type of the element under selection, which prevents invalid expressions from being constructed.
 

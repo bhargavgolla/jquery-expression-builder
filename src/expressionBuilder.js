@@ -586,7 +586,7 @@
         if (data.isMultiSized) {
           //this.makeActive($target);
           this.addExpressionElement(',');
-          this.expandableInputs.push(this.addExpandableTypeInput(data));
+          this.addExpandableTypeInput(data);
           this.makeActive($target);
         }
         subExpr.render();
