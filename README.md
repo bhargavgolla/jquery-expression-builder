@@ -3,6 +3,12 @@
 A jQuery Plugin for constructing valid DSL expressions.  Expressions are constructed by recursively chosing sub-expressions until the expression is complete.
 Support is included for saving Expression Templates (expressions with sub-expressions yet to be chosen).
 
+## Getting Started
+Download the [production version][min] or the [development version][max].
+
+[min]: https://raw.github.com/jonmbake/jquery-expression-builder/master/dist/expressionBuilder.min.js
+[max]: https://raw.github.com/jonmbake/jquery-expression-builder/master/dist/expressionBuilder.js
+
 ### Dependencies
 
 The Expression Builder uses bootstrap 3 for styling, underscore.js as a javascipt utility library, and select2 for the sub-expression selector.
