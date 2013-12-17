@@ -34,7 +34,7 @@ The Expression Builder uses bootstrap 3 for styling, underscore.js as a javascip
 
 ## Documentation
 
-The best way to learn about the expression builder is to view the [Well-Commented Source](./src/expressionBuilder.js) or the [Demo](./demo.html).
+The best way to learn about the expression builder is to view the [Well-Commented Source](./src/expressionBuilder.js) or the [Demo](http://jonmbake.github.io/jquery-expression-builder/).
 
 The basic idea of the Expression Builder is to use the type system of the language to build an expression in a more structured way.  This is done by recursively chosing a sub-expressions until the expression is complete. Sub-expressions available for selection are filtered by return type given the expected type of the element under selection, which prevents invalid expressions from being constructed.
 
@@ -57,7 +57,7 @@ returnType		     | Return type of the sub-expression.  The sub-expression select
 rightType		       | Return type of the right component to the sub-expression (if it has one).  This can be left blank.  Left type can be defined as either a statically or dynamically sized list by surrounding the type in parens.  A dynamically sized list is notated by add '...' before the right parens (see example).
 leftType		       | Return type of the left component to the sub-expression (if it has one).  This can be left blank.  Right type can be defined as either a statically or dynamically sized list by surrounding the type in parens.  A dynamically sized list is notated by add '...' before the right parens (see example).
 
-##Options
+### Options
 
 The second argument to the expression builder is object of options.  The following table lists the options available:
 
@@ -75,7 +75,7 @@ There are a couple of built-in types, namely TEXT and NUMBER.  These were provid
 
 An Array value of types can be supplied as either the right or left type.  This is primarily used for overloaded operators.  The Expression Builder will automaticlly change the alternative type when an sub-expression for the other side is chosen.  For instance, say the '+' operator is overloaded to both addition and string concatenation.  If we chose '4' as the left sub-expression element to the operator, the right type will automatically be changed to from an Array of 'NUMBER' and 'STRING' to just 'NUMBER'.
 
-##Events
+### Events
 
 The following events are fired from within the Expression Builder.  To listen to the event use `$("div#exprBldr").on('eb-event', function (event, eventArgs) { ... });`
 
@@ -86,7 +86,7 @@ eb-subexpresion-add    | Triggered when a sub-expression is added.   | Sub-expre
 eb-clear 			         | Triggered when the expression is cleared.   | NONE
 
 
-##API
+### API
 
 Methods can be invoked on the Expression Builder by using the following syntax: `$("div#exprBldr").expressionBuilder('method');`
 
