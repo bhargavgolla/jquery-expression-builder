@@ -34,7 +34,7 @@ The Expression Builder uses bootstrap 3 for styling, underscore.js as a javascip
 
 ## Documentation
 
-The best way to learn about the expression builder is to view the [Well-Commented Source](./src/expressionBuilder.js) or the [Demo](http://jonmbake.github.io/jquery-expression-builder/).
+The best way to learn about the expression builder is to view the [Well-Commented Source](./src/expressionBuilder.js) or the [Demo](http://jonmbake.github.io/jquery-expression-builder/demo.html).
 
 The basic idea of the Expression Builder is to use the type system of the language to build an expression in a more structured way.  This is done by recursively chosing a sub-expressions until the expression is complete. Sub-expressions available for selection are filtered by return type given the expected type of the element under selection, which prevents invalid expressions from being constructed.
 
