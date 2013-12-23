@@ -71,7 +71,6 @@
       }
     ];
       $(document).ready(function () {
-        //it's a hack-a-roma over here!
         $("div#exprBldr").expressionBuilder(subExpressions);
          $("#exprReturnTypeSelect > .btn").click(function () {
             $("#exprReturnTypeSelect > .btn").removeClass("active");
@@ -86,7 +85,7 @@
           $(".evalElem").hide();
         });
         $("#evalBtn").click(function() {
-          $('#exprEvalValue').text(eval($("div#exprBldr").expressionBuilder('getExpression')));
+          $('#exprEvalValue').text(eval($("div#exprBldr").expressionBuilder('getExpressionValue')));
           $('.evalElem').show();
         });
       });

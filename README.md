@@ -13,25 +13,6 @@ Download the [production version][min] or the [development version][max].
 
 The Expression Builder uses bootstrap 3 for styling, underscore.js as a javascipt utility library, and select2 for the sub-expression selector.
 
-### In Your Web Page
-
-```html
-  <script src="libs/jquery/jquery.js"></script>
-  <link href="libs/select2/select2.css" rel="stylesheet"/>
-  <link href="styles/expressionBuilder.css" rel="stylesheet"/>
-  <link href="libs/bootstrap/css/bootstrap.css" rel="stylesheet"/>
-  <script src="libs/select2/select2.js"></script>
-  <script src="libs/underscore/underscore.js"></script>
-  <script src="src/expressionBuilder.js"></script>
-  <script type='text/javascript'>
-
-    $(document).ready(function () {
-    	var subExpressions = [...];
-    	$("div#exprBldr").expressionBuilder(subExpressions, options);
-    });
-</script>
-```
-
 ## Documentation
 
 The best way to learn about the expression builder is to view the [Well-Commented Source](./src/expressionBuilder.js) or the [Demo](http://jonmbake.github.io/jquery-expression-builder/demo.html).
@@ -54,8 +35,8 @@ displayNameParens  | Further describe a Sub-Expression.  Will dispaly in sub-exp
 expressionValue    | Expression value of the sub-expression.  This will be returned when gettting the expression value of a completed expression.  If an expression value is not give, it will default to the displayName.
 description 	     | Description of the sub-expression.  Shows in the help text when the sub-expression within the selector is highlighted.
 returnType		     | Return type of the sub-expression.  The sub-expression select will be filtered by the return type of the currently selected expansion point in the active expression
-rightType		       | Return type of the right component to the sub-expression (if it has one).  This can be left blank.  Left type can be defined as either a statically or dynamically sized list by surrounding the type in parens.  A dynamically sized list is notated by add '...' before the right parens (see example).
-leftType		       | Return type of the left component to the sub-expression (if it has one).  This can be left blank.  Right type can be defined as either a statically or dynamically sized list by surrounding the type in parens.  A dynamically sized list is notated by add '...' before the right parens (see example).
+rightType		       | Return type of the right component to the sub-expression (if it has one).  This can be left blank.  Right type can be defined as either a statically or dynamically sized list by surrounding the type in parens.  A dynamically sized list is notated by adding '...' before the right parens (see example).
+leftType		       | Return type of the left component to the sub-expression (if it has one).  This can be left blank.  Left type can be defined as either a statically or dynamically sized list by surrounding the type in parens.  A dynamically sized list is notated by adding '...' before the right parens (see example).
 
 ### Options
 
@@ -71,7 +52,7 @@ templateURL        | URL to POST to when saving a template or GET when getting t
 
 There are a couple of built-in types, namely TEXT and NUMBER.  These were provided because there is built-in support for Text (String) and Number literals.
 
-### Overloaded Operators
+### Overloading Operators
 
 An Array value of types can be supplied as either the right or left type.  This is primarily used for overloaded operators.  The Expression Builder will automaticlly change the alternative type when an sub-expression for the other side is chosen.  For instance, say the '+' operator is overloaded to both addition and string concatenation.  If we chose '4' as the left sub-expression element to the operator, the right type will automatically be changed to from an Array of 'NUMBER' and 'STRING' to just 'NUMBER'.
 
@@ -92,13 +73,13 @@ Methods can be invoked on the Expression Builder by using the following syntax: 
 
 The following methods are available:
 
-Method          | Description                                                                                                    | Arguments
---------------- | -------------------------------------------------------------------------------------------------------------- | ---------
-getExpression   | Get the expression value of the current expression.                                                            | NONE
-getJSON         | Get the JSON representation of the current expression.  This is what gets saved when persisting a template.    | NONE
-clear           | Reset the current expression back to its starting state.                                                       | NONE 
-saveAsTemplate  | Save the current expression as a template                                                                      | NONE
-changeStartType | Change the start type.                                                                                         | type
+Method             | Description                                                                                                    | Arguments
+------------------ | -------------------------------------------------------------------------------------------------------------- | ---------
+getExpressionValue | Get the expression value of the current expression.                                                            | NONE
+getExpressionJSON  | Get the JSON representation of the current expression.  This is what gets saved when persisting a template.    | NONE
+clearExpression    | Reset the current expression back to its starting state.                                                       | NONE 
+saveAsTemplate     | Save the current expression as a template                                                                      | NONE
+setReturnType      | Set the expression return type.                                                                                | type
 
 ## Release History
 0.1.0 - Initial Release - Support for basic expression builder and saving templates.

@@ -532,7 +532,7 @@
       if (inputToFocus.length) {
         inputToFocus.focus();
       } else { //expression is comlete!
-        this.s$().trigger('eb-expression-complete', api.getExpression.call(this.s$()));
+        this.s$().trigger('eb-expression-complete', api.getExpressionValue.call(this.s$()));
         this.s$('input.subExpr').select2('enable', false);
       }
     };
@@ -1150,13 +1150,13 @@
       this.data('expressionBuilder', eb);
       return this;
     },
-    getExpression: function () {
+    getExpressionValue: function () {
       return this.data('expressionBuilder').getExpression();
     },
-    getJSON: function () {
+    getExpressionJSON: function () {
       return this.data('expressionBuilder').getJSON();
     },
-    clear: function () {
+    clearExpression: function () {
       this.data('expressionBuilder').clear();
     },
     /*
@@ -1170,7 +1170,7 @@
     getTemplates: function () {
       return this.data('expressionBuilder').getTemplates();
     },
-    changeStartType: function (type) {
+    setReturnType: function (type) {
       this.data('expressionBuilder').expressionReturnType = type;
       this.data('expressionBuilder').clear();
     }

@@ -1,5 +1,5 @@
-/*! Expressionbuilder - v0.1.0 - 2013-12-07
-* https://github.com/jonmbake/expressionBuilder
+/*! jQuery Expression Builder - v0.1.0 - 2013-12-23
+* https://github.com/jonmbake/jquery-expression-builder
 * Copyright (c) 2013 Jon Bake; Licensed MIT */
 
 /*global _ */
@@ -529,7 +529,7 @@
       if (inputToFocus.length) {
         inputToFocus.focus();
       } else { //expression is comlete!
-        this.s$().trigger('eb-expression-complete', api.getExpression.call(this.s$()));
+        this.s$().trigger('eb-expression-complete', api.getExpressionValue.call(this.s$()));
         this.s$('input.subExpr').select2('enable', false);
       }
     };
@@ -583,7 +583,7 @@
         if (data.isMultiSized) {
           //this.makeActive($target);
           this.addExpressionElement(',');
-          this.expandableInputs.push(this.addExpandableTypeInput(data));
+          this.addExpandableTypeInput(data);
           this.makeActive($target);
         }
         subExpr.render();
@@ -977,6 +977,7 @@
         }
       };
       this.s$ = s$;
+      this.expressionReturnType = this.options.returnType;
       this.addStartSubExpresion();
 
       this.selectElementCollection = new SelectElementCollection(subExprsGrouped, this.getTemplates(), s$);
@@ -1062,7 +1063,7 @@
      * Get things started by adding type component for expression return type.
      */
     addStartSubExpresion: function () {
-      this.startSubExpression = new TypeComponent(this.s$, this.options.returnType);
+      this.startSubExpression = new TypeComponent(this.s$, this.expressionReturnType);
       this.s$('div.exprInner input:first').remove();
       this.startSubExpression.focusNextInput();
     },
@@ -1146,13 +1147,13 @@
       this.data('expressionBuilder', eb);
       return this;
     },
-    getExpression: function () {
+    getExpressionValue: function () {
       return this.data('expressionBuilder').getExpression();
     },
-    getJSON: function () {
+    getExpressionJSON: function () {
       return this.data('expressionBuilder').getJSON();
     },
-    clear: function () {
+    clearExpression: function () {
       this.data('expressionBuilder').clear();
     },
     /*
@@ -1165,6 +1166,10 @@
     },
     getTemplates: function () {
       return this.data('expressionBuilder').getTemplates();
+    },
+    setReturnType: function (type) {
+      this.data('expressionBuilder').expressionReturnType = type;
+      this.data('expressionBuilder').clear();
     }
   };
 
@@ -1173,7 +1178,6 @@
     var plugingArgs = arguments;
     var returnVal = this.map(function () {
       var $this = $(this);
-      //if the element already has data assume it is a method call on expression builder
        if(api[method]) {
           return api[method].apply($(this), _.rest(plugingArgs));
         } else {

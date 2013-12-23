@@ -167,12 +167,14 @@
     ok($(visInput).hasClass('subExprActive', 'sub expression input has subExprActive class'));
   });
 
-  test('Sub-expressions selections are filtered by return type of active sub-expression input', function() {
+  var testReturnTypeIsNumber = function() {
     var subExprWithNumberReturnType =
       _.filter(_.flatten(_.map(subExpressions, function (seg) { return seg.values; })), function (subExpr) { return subExpr.returnType === 'NUMBER'; }).length;
     //there are system defined number sub expressions: Grouping and Number Literal (String Literal Should be filtered out since it's type is TEXT)
     equal($('li.select2-result:not(.select2-result-with-children)').length, subExprWithNumberReturnType + 2, 'Sub-expr select has correct options');
-  });
+  };
+
+  test('Sub-expressions selections are filtered by return type of active sub-expression input', testReturnTypeIsNumber);
 
   function selectOption (id) {
     //select addition
@@ -303,18 +305,18 @@
     }
   });
 
-  test('Get expression method returns the expression value', function() {
+  test('GetExpressionValue method returns the expression value', function() {
     selectOption('is before');
     selectOption('Date Field 1');
     selectOption('Date Field 2');
-    equal(this.divFixture.expressionBuilder('getExpression'), 'date_field_1 < date_field_2', 'The expression is correct on get');
+    equal(this.divFixture.expressionBuilder('getExpressionValue'), 'date_field_1 < date_field_2', 'The expression is correct on get');
   });
 
   test('GetJSON returns a json rep of current expression', function() {
     selectOption('is before');
     selectOption('Date Field 1');
     selectOption('Date Field 2');
-    var json = this.divFixture.expressionBuilder('getJSON');
+    var json = this.divFixture.expressionBuilder('getExpressionJSON');
     //it is hard to test every property of the JSON, just test a few key ones
     equal(json.expressionValue, '<', 'Expresion value is set in json');
     equal(json.leftComponent.expressionValue, 'date_field_1', 'Left component is set in json');
@@ -329,6 +331,12 @@
     equal(this.divFixture.expressionBuilder('getTemplates').displayText, 'is before', 'Templates diplayText is correct');
   });
 
+  test('Expression return type can be changed', function() {
+    selectOption('is before');
+    this.divFixture.expressionBuilder('setReturnType', 'NUMBER');
+    testReturnTypeIsNumber.call();
+  });
+
   test('Expression can be cleared and eb-clear event is fired', 4, function() {
     this.divFixture.on('eb-clear', function (e) {
       ok(true, 'Event was fired');
@@ -336,7 +344,7 @@
     selectOption('is before');
     //verify 2 inputs before clear
     equal($(visInput).length, 2, 'There are two inputs before clear');
-    this.divFixture.expressionBuilder('clear');
+    this.divFixture.expressionBuilder('clearExpression');
     equal($(visInput).length, 1, 'There is one input after');
     equal($(visInput).data('returnType'), 'BOOLEAN', 'The return type is reset after clear');
   });

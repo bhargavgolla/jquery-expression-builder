@@ -1,5 +1,5 @@
 {
-  "name": "jquery-expression-builder",
+  "name": "expressionBuilder",
   "title": "jQuery Expression Builder",
   "description": "Plugin for constructing valid expressions using Select2.",
   "version": "0.1.0",
