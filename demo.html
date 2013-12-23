@@ -75,7 +75,7 @@
          $("#exprReturnTypeSelect > .btn").click(function () {
             $("#exprReturnTypeSelect > .btn").removeClass("active");
             $(this).toggleClass("active");
-            $("div#exprBldr").expressionBuilder('changeStartType', $(this).text());
+            $("div#exprBldr").expressionBuilder('setReturnType', $(this).text());
         });
        $("div#exprBldr").on('eb-expression-complete', function () {
           console.log('ex com');
