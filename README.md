@@ -46,6 +46,7 @@ Option             | Description                                                
 ------------------ | ------------------------------------------------------------------- | ---------
 returnType         | Expression return type                                              | NUMBER
 templateURL        | URL to POST to when saving a template or GET when getting templates | If a URL is not provided, will use local storage
+expressionURL      | URL to get sub-expression values from.  This will be merged with the set of sub-expressions passed in as argumnets  | empty
 
 
 ### Built-In Types
@@ -88,7 +89,6 @@ setReturnType      | Set the expression return type.                            
 * A really long expression expands beyond containing div
 
 ## To Do 
-* Support for ajax sub-expression loading
 * Support for ignoring sub-expression when saving
 * Support for mananging saved templates
 * Upgrade Grunt to 0.4+

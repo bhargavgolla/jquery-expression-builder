@@ -1,11 +1,9 @@
-/*! jQuery Expression Builder - v0.1.0 - 2013-12-23
+/*! jQuery Expression Builder - v0.1.0 - 2014-01-05
 * https://github.com/jonmbake/jquery-expression-builder
-* Copyright (c) 2013 Jon Bake; Licensed MIT */
+* Copyright (c) 2014 Jon Bake; Licensed MIT */
 
-/*global _ */
 (function($, _) {
   //TO DO: Extract this to a template
-  /*jshint multistr: true */
   var layout =
     '<div class="exprBldrMain panel panel-primary">\
     <div class="panel-heading"><h3 class="panel-title">Expression Builder</h3></div>\
@@ -980,6 +978,11 @@
       this.expressionReturnType = this.options.returnType;
       this.addStartSubExpresion();
 
+      if (this.options.expressionURL) {
+        $.get(this.options.getExpressionURL, function(data) {
+          _.extend(subExprsGrouped, data);
+        });
+      }
       this.selectElementCollection = new SelectElementCollection(subExprsGrouped, this.getTemplates(), s$);
 
       var subExprSelect = $('input.subExpr');
