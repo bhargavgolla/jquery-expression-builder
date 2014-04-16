@@ -13,11 +13,13 @@ Download the [production version][min] or the [development version][max].
 
 The Expression Builder uses bootstrap 3 for styling, underscore.js as a javascipt utility library, and select2 for the sub-expression selector.
 
+Note: The version of Select2.js included in this project was modified slightly to ensure the dropdown always opens downwards as to not hide the expression input.
+
 ## Documentation
 
 The best way to learn about the expression builder is to view the [Well-Commented Source](./src/expressionBuilder.js) or the [Demo](http://jonmbake.github.io/jquery-expression-builder/demo.html).
 
-The basic idea of the Expression Builder is to use the type system of the language to build an expression in a more structured way.  This is done by recursively chosing a sub-expressions until the expression is complete. Sub-expressions available for selection are filtered by return type given the expected type of the element under selection, which prevents invalid expressions from being constructed.
+The basic idea of the Expression Builder is to use the type system of the language to build an expression in a more structured way.  This is done by recursively chosing a sub-expressions until the expression is complete. Sub-expressions available for selection are filtered by return type given the expected type of the element under selection.  This is a great way to prevent invalid expressions from being created.
 
 For instance, if you wanted to construct the expression '4 + 5', if you first select the sub-expression '+', you know that both the left and right componenets must be sub-expressions that evaluate to a NUMBER (assuming '+' is not overloaded).  When chosing the left or right component, the sub-expression list can be filtered to allow the selection of only sub-expressions that evaluate to a NUMBER, which includes Number Literals.
 
