@@ -1,4 +1,4 @@
-/*! jQuery Expression Builder - v0.1.0 - 2014-01-05
+/*! jQuery Expression Builder - v0.1.0 - 2014-04-16
 * https://github.com/jonmbake/jquery-expression-builder
 * Copyright (c) 2014 Jon Bake; Licensed MIT */
 
@@ -1177,14 +1177,16 @@
   };
 
   //Expose the plugin
-  $.fn.expressionBuilder = function(method) {
-    var plugingArgs = arguments;
+  $.fn.expressionBuilder = function(firstArg) {
+    var pluginArgs = arguments;
     var returnVal = this.map(function () {
       var $this = $(this);
-       if(api[method]) {
-          return api[method].apply($(this), _.rest(plugingArgs));
-        } else {
-          return api.init.apply($(this), plugingArgs);
+       if (typeof firstArg === 'object') { //calling the constructor
+          return api.init.apply($(this), pluginArgs);
+        } else if (typeof firstArg === 'string' && api[firstArg]) { //calling an API method
+          return api[firstArg].apply($(this), _.rest(pluginArgs));
+        } else { //calling a method that is not part of the API -- throw an erro
+          throw new Error("Calling method that is not part of API");
         }
     });
     if (returnVal.length === 1) {
