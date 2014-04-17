@@ -17,7 +17,7 @@
       </div>\
       <div class="btn-toolbar" style="float: right">\
             <div class="btn-group btn-group-xs">\
-              <!--<button type="button" class="btn btn-default back-btn">Back</button>-->\
+              <button type="button" class="btn btn-default back-btn">Back</button>\
               <button type="button" class="btn btn-default clear-btn">Clear</button>\
               <button type="button" class="btn btn-default save-as-btn">Save As Template</button>\
             </div>\
@@ -948,7 +948,7 @@
     if (this.rightComponent) {
       this.rightComponent.remove();
     }
-    this.parentElement.show();
+    this.parentElement.show().focus();
   };
   /**
    * The Expression Builder object.
@@ -1035,11 +1035,9 @@
         s$('span.seSignature').text('N/A');
       });
       //set up buttons
-      /*
       s$('.back-btn').on('click', _.bind(function () {
         this.back();
       }, this));
-      */
       s$('.clear-btn').on('click', _.bind(function () {
         this.clear();
       }, this));
@@ -1085,14 +1083,13 @@
       this.addStartSubExpresion();
       this.s$().trigger('eb-clear');
     },
-    /*
     back: function () {
       var $hiddenInput = this.s$('.exprInner input:not(:visible)').last();
       if ($hiddenInput && $hiddenInput.data('subExpr')) {
         $hiddenInput.data('subExpr').remove();
       }
+      this.s$().trigger('eb-back');
     },
-    */
    getTemplates: function () {
     if (this.options.templateURL) {
       var returnVal;
@@ -1162,11 +1159,9 @@
     clearExpression: function () {
       this.data('expressionBuilder').clear();
     },
-    /*
     back: function () {
       this.data('expressionBuilder').back();
     },
-    */
     saveAsTemplate: function (templateName) {
       this.data('expressionBuilder').saveAsTemplate(templateName);
     },
@@ -1189,7 +1184,7 @@
         } else if (typeof firstArg === 'string' && api[firstArg]) { //calling an API method
           return api[firstArg].apply($(this), _.rest(pluginArgs));
         } else { //calling a method that is not part of the API -- throw an error
-          throw new Error("Calling method that is not part of API");
+          throw new Error("Calling method that is not part of the API");
         }
     });
     if (returnVal.length === 1) {

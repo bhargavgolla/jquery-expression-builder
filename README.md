@@ -67,7 +67,8 @@ Event Name  		       | Description                           		   | Arguments
 ---------------------- | ------------------------------------------- | ----------
 eb-expression-complete | Triggered when expression is complete.      | Expression Value
 eb-subexpresion-add    | Triggered when a sub-expression is added.   | Sub-expression data of the added element.
-eb-clear 			         | Triggered when the expression is cleared.   | NONE
+eb-clear 			   | Triggered when the expression is cleared.   | NONE
+eb-back 			   | Triggered when poping off that last added sub-expresson | NONE
 
 
 ### API
@@ -81,6 +82,7 @@ Method             | Description                                                
 getExpressionValue | Get the expression value of the current expression.                                                            | NONE
 getExpressionJSON  | Get the JSON representation of the current expression.  This is what gets saved when persisting a template.    | NONE
 clearExpression    | Reset the current expression back to its starting state.                                                       | NONE 
+back               | Pops off the last added sub-expression.                                                                        | NONE 
 saveAsTemplate     | Save the current expression as a template                                                                      | NONE
 setReturnType      | Set the expression return type.                                                                                | type
 

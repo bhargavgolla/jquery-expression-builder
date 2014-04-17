@@ -164,7 +164,7 @@
   });
 
   test('Sub-expression has subExprActive class', function() {
-    ok($(visInput).hasClass('subExprActive', 'sub expression input has subExprActive class'));
+    ok($(visInput).hasClass('subExprActive'), 'sub expression input has subExprActive class');
   });
 
   var testReturnTypeIsNumber = function() {
@@ -348,7 +348,13 @@
     equal($(visInput).length, 1, 'There is one input after');
     equal($(visInput).data('returnType'), 'BOOLEAN', 'The return type is reset after clear');
   });
-/*
+
+  function assertStartingState (startingType) {
+    equal($(visInput).length, 1, 'There is 1 input');
+    equal($(visInput).data('returnType'), startingType, 'The input has the starting return type');
+    ok($(visInput).hasClass('subExprActive'), 'sub expression input has subExprActive class');
+  }
+
   test('Back functionality works', function() {
     selectOption('is before');
     selectOption('Date Field 1');
@@ -356,8 +362,14 @@
     equal($(visInput).length, 0, 'There are no inputs before calling back');
     this.divFixture.expressionBuilder('back');
     //back should remove Date Field 2 and replace it with a TEMPORAL typed input
-    equal($(visInput).length, 1, 'There are 1 input after calling back');
+    equal($(visInput).length, 1, 'There is 1 input after calling back');
     equal($(visInput).eq(0).data('returnType'), 'TEMPORAL', 'The input put back has the return type still set');
+    //pressing back again should replace other date field
+    this.divFixture.expressionBuilder('back');
+    equal($(visInput).length, 2, 'There are 2 input after calling back');
+    //pressing back again returns it to the starting state
+    this.divFixture.expressionBuilder('back');
+    assertStartingState('BOOLEAN');
   });
 
   test('eb-back event is triggered', function() {
@@ -367,5 +379,5 @@
     selectOption('is before');
     this.divFixture.expressionBuilder('back');
   });
-*/
+
 }(jQuery, _));
