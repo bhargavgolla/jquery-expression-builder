@@ -467,7 +467,7 @@
     });
     //do not show grouping if there is not at least one non-filtered child
     if (children.length !== 0) {
-      return {'text': this.getDisplayText(), 'id': this.displayName, 'children': children};
+      return {'text': this.getDisplayText(), 'children': children};
     } else {
      return null;
     }
