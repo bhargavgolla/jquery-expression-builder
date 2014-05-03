@@ -245,10 +245,10 @@
     equal($(visInput).length, 0, 'The list can be closed');
   });
 
-  module('jQuery#expressionBuilder boolean start expression', {
+  module('jQuery#expressionBuilder non-default option (boolean start expression, etc.)', {
     setup: function() {
       this.divFixture = $('div#qunit-fixture');
-      this.exprBldr = this.divFixture.expressionBuilder(subExpressions, {'returnType': 'BOOLEAN'});
+      this.exprBldr = this.divFixture.expressionBuilder(subExpressions, {'returnType': 'BOOLEAN', 'quickRemove': false});
     },
     teardown: function() {
       this.divFixture.empty();
@@ -290,6 +290,16 @@
     selectOption('is before');
     selectOption('Date Field 1');
     selectOption('Date Field 2');
+  });
+
+  test('Pressing backspace if quickRemove option is set to false should not call back', function () {
+    selectOption('is before');
+    equal($(visInput).length, 2, 'There are two inputs before pressing backspace');
+    //8 == backspace event
+    var e = $.Event('keydown');
+    e.which = 8;
+    $('.select2-input').trigger(e);
+    equal($(visInput).length, 2, 'There are still two inputs after pressing backspace');
   });
 
   module('Test API', {
@@ -398,10 +408,5 @@
     e.which = 8;
     var backAction = _.bind($().trigger, $('.select2-input'), e);
     testBack(backAction);
-  });
-
-  test('Pressing backspace if quickRemove option is set to false should not call back', function () {
-    //STUB - TODO
-    expect(0);
   });
 }(jQuery, _));

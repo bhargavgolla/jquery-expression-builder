@@ -1007,6 +1007,17 @@
         query: _.bind(function(query) {
           var data = {};
           data.results = this.selectElementCollection.filter(query);
+          //the quick add option will automatically add the element when it is the only option available
+          var resultIds = _.chain(data.results)
+            .map(function (r) {
+              return r.id || _.pluck(r.children, 'id');
+            })
+            .flatten()
+            .value();
+          if (this.options.quickAdd && resultIds.length === 1) {
+            subExprSelect.select2('val', '').select2('close');
+            this.selectElementCollection.getById(resultIds[0]).onSelect();
+          }
           query.callback (data);
         }, this)
       });
@@ -1039,7 +1050,7 @@
       //This is a hack.  Select2 does not listen to key* events.
       var _this = this;
       $('.select2-input').keydown( function(event) {
-        if (_this.options.quickRemove && event.which === 8 && $(this).val().length <= 1) {
+        if (_this.options.quickRemove && event.which === 8 && $(this).val().length === 0) {
           _this.back();
         }
       });
