@@ -47,6 +47,8 @@ The second argument to the expression builder is object of options.  The followi
 Option             | Description                                                         | Defaults
 ------------------ | ------------------------------------------------------------------- | ---------
 returnType         | Expression return type                                              | NUMBER
+*TODO* quickAdd           | Will automatically add the expression when text entered in the sub-expression select exactly matches that of the sub-expression display name.  This effectively saves an <Enter> keystroke.                                      | true
+quickRemove        | Will remove previously entered sub-expression when pressing <Backspace> within empty sub-expression select input box.                                      | true
 templateURL        | URL to POST to when saving a template or GET when getting templates | If a URL is not provided, will use local storage
 expressionURL      | URL to get sub-expression values from.  This will be merged with the set of sub-expressions passed in as argumnets  | empty
 
@@ -100,3 +102,7 @@ setReturnType      | Set the expression return type.                            
 * Return type instead of '?' as place holder for expandable inputs
 * Get off of Bootstrap for styling... might be a little bit of overkill for such a small project.
 
+### Testing
+* Add test of AJAX calls
+* Add test for quickRemove option (skeleton test present)
+* Extract test helpers

@@ -1,4 +1,4 @@
-/*! jQuery Expression Builder - v0.1.0 - 2014-04-17
+/*! jQuery Expression Builder - v0.1.0 - 2014-05-02
 * https://github.com/jonmbake/jquery-expression-builder
 * Copyright (c) 2014 Jon Bake; Licensed MIT */
 
@@ -44,7 +44,9 @@
     </div>';
 
   var defaults = {
-    'returnType': 'NUMBER'
+    'returnType': 'NUMBER',
+    'quickAdd': true, //TODO
+    'quickRemove': true
   };
 
   /**
@@ -464,7 +466,7 @@
     });
     //do not show grouping if there is not at least one non-filtered child
     if (children.length !== 0) {
-      return {'text': this.getDisplayText(), 'id': this.displayName, 'children': children};
+      return {'text': this.getDisplayText(), 'children': children};
     } else {
      return null;
     }
@@ -1030,6 +1032,13 @@
       subExprSelect.on('select2-close', function (e) {
         s$('span.helpDescription').text('N/A');
         s$('span.seSignature').text('N/A');
+      });
+      //This is a hack.  Select2 does not listen to key* events.
+      var _this = this;
+      $('.select2-input').keydown( function(event) {
+        if (_this.options.quickRemove && event.which === 8 && $(this).val().length <= 1) {
+          _this.back();
+        }
       });
       //set up buttons
       s$('.back-btn').on('click', _.bind(function () {

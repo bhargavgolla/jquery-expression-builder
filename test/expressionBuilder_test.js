@@ -355,15 +355,27 @@
     ok($(visInput).hasClass('subExprActive'), 'sub expression input has subExprActive class');
   }
 
-  test('Back functionality works', function() {
+  /**
+   * Since back happen through multiple actions (pressing back button or backspace within SE Select),
+   * we extract this to a helper.
+   * 
+   * @param  {function} backAction action that makes back happen
+   * @return {void}
+   */
+  function testBack (backAction) {
     selectOption('is before');
     selectOption('Date Field 1');
     selectOption('Date Field 2');
     equal($(visInput).length, 0, 'There are no inputs before calling back');
-    this.divFixture.expressionBuilder('back');
+    backAction();
     //back should remove Date Field 2 and replace it with a TEMPORAL typed input
     equal($(visInput).length, 1, 'There is 1 input after calling back');
     equal($(visInput).eq(0).data('returnType'), 'TEMPORAL', 'The input put back has the return type still set');
+  }
+
+  test('Back functionality works', function() {
+    var backAction = _.bind(this.divFixture.expressionBuilder, this.divFixture, 'back');
+    testBack(backAction);
     //pressing back again should replace other date field
     this.divFixture.expressionBuilder('back');
     equal($(visInput).length, 2, 'There are 2 input after calling back');
@@ -380,4 +392,16 @@
     this.divFixture.expressionBuilder('back');
   });
 
+  test('Pressing backspace when sub-expression text box is empty should call back', function () {
+    //8 == backspace event
+    var e = $.Event('keydown');
+    e.which = 8;
+    var backAction = _.bind($().trigger, $('.select2-input'), e);
+    testBack(backAction);
+  });
+
+  test('Pressing backspace if quickRemove option is set to false should not call back', function () {
+    //STUB - TODO
+    expect(0);
+  });
 }(jQuery, _));

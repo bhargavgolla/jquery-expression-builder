@@ -47,7 +47,9 @@
     </div>';
 
   var defaults = {
-    'returnType': 'NUMBER'
+    'returnType': 'NUMBER',
+    'quickAdd': true, //TODO
+    'quickRemove': true
   };
 
   /**
@@ -1033,6 +1035,13 @@
       subExprSelect.on('select2-close', function (e) {
         s$('span.helpDescription').text('N/A');
         s$('span.seSignature').text('N/A');
+      });
+      //This is a hack.  Select2 does not listen to key* events.
+      var _this = this;
+      $('.select2-input').keydown( function(event) {
+        if (_this.options.quickRemove && event.which === 8 && $(this).val().length <= 1) {
+          _this.back();
+        }
       });
       //set up buttons
       s$('.back-btn').on('click', _.bind(function () {
