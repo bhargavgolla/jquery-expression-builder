@@ -15,6 +15,10 @@
   width: 70px;
 }
 
+.exprBldrMain .exprInner input:hover {
+  cursor: pointer;
+}
+
 .exprBldrMain .exprInner input.subExprActive {
     outline: none;
     border-color: #9ecaed;

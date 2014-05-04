@@ -100,7 +100,10 @@ setReturnType      | Set the expression return type.                            
 * Upgrade Grunt to 0.4+
 * Should Number and String Literals insert 0 and "", respectively when text is blank? (might be confusing to user)
 * Return type instead of '?' as place holder for expandable inputs
-* Get off of Bootstrap for styling... might be a little bit of overkill for such a small project.
+
+### Styling
+* Refactor expressionBuilder.css
+* Fix whitespace between elements in active expression
 
 ### Testing
 * Add test of AJAX calls
