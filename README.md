@@ -107,4 +107,3 @@ setReturnType      | Set the expression return type.                            
 
 ### Testing
 * Add test of AJAX calls
-* Extract test helpers

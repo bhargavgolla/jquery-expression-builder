@@ -1,4 +1,4 @@
-/*! jQuery Expression Builder - v0.1.0 - 2014-05-04
+/*! jQuery Expression Builder - v0.1.0 - 2014-05-05
 * https://github.com/jonmbake/jquery-expression-builder
 * Copyright (c) 2014 Jon Bake; Licensed MIT */
 

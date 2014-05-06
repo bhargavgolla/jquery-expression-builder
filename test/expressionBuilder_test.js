@@ -115,6 +115,55 @@
       ]
     }
   ];
+
+
+  var VIS_INPUT = 'div.exprInner > input:visible';
+  var VIS_IN_SEL = 'div.exprInner > *:visible';
+
+  /**
+   * Test Helpers.
+   * @type {Object}
+   */
+  var testHelpers = {
+    /**
+     * Select option with id from sub-expression selector.
+     *
+     * @param  {String} id id of sub-expression
+     * @return {void}
+     */
+    selectOption: function(id) {
+      $('input.subExpr').select2('val', id);
+    },
+    /**
+     * Assert that the active expression is in the starting state.
+     *
+     * @param  {String} startingType starting type to verify
+     * @return {void}
+     */
+    assertStartingState: function(startingType) {
+      equal($(VIS_INPUT).length, 1, 'There is 1 input');
+      equal($(VIS_INPUT).data('returnType'), startingType, 'The input has the starting return type');
+      ok($(VIS_INPUT).hasClass('subExprActive'), 'sub expression input has subExprActive class');
+    },
+    /**
+     * Since back happen through multiple actions (pressing back button or backspace within SE Select),
+     * we extract this to a helper.  Have to keep that code DRY.
+     * 
+     * @param  {function} backAction action that makes back happen
+     * @return {void}
+     */
+    testBack: function(backAction) {
+      testHelpers.selectOption('is before');
+      testHelpers.selectOption('Date Field 1');
+      testHelpers.selectOption('Date Field 2');
+      equal($(VIS_INPUT).length, 0, 'There are no inputs before calling back');
+      backAction();
+      //back should remove Date Field 2 and replace it with a TEMPORAL typed input
+      equal($(VIS_INPUT).length, 1, 'There is 1 input after calling back');
+      equal($(VIS_INPUT).eq(0).data('returnType'), 'TEMPORAL', 'The input put back has the return type still set');
+    }
+  };
+
   module('jQuery#expressionBuilder default config', {
     setup: function() {
       this.divFixture = $('div#qunit-fixture');
@@ -158,13 +207,13 @@
     //ok($('div.exprInner input').is(":focus"), 'Select2 was appended to div');
   });
   */
-  var visInput = 'div.exprInner > input:visible';
+
   test('Sub-expression start input has default return type', function() {
-    equal($(visInput).data('returnType'), 'NUMBER', 'sub expression input in Number');
+    equal($(VIS_INPUT).data('returnType'), 'NUMBER', 'sub expression input in Number');
   });
 
   test('Sub-expression has subExprActive class', function() {
-    ok($(visInput).hasClass('subExprActive'), 'sub expression input has subExprActive class');
+    ok($(VIS_INPUT).hasClass('subExprActive'), 'sub expression input has subExprActive class');
   });
 
   var testReturnTypeIsNumber = function() {
@@ -176,15 +225,10 @@
 
   test('Sub-expressions selections are filtered by return type of active sub-expression input', testReturnTypeIsNumber);
 
-  function selectOption (id) {
-    //select addition
-    $('input.subExpr').select2('val', id);
-  }
-
   test('Inputs, spans are added to expression when subexpression is selected', function () {
-    selectOption('+');
+    testHelpers.selectOption('+');
 
-    equal($(visInput).length, 2, 'There is an input appended for left and right types');
+    equal($(VIS_INPUT).length, 2, 'There is an input appended for left and right types');
     equal($('div.exprInner > span').length, 1, 'There is a span appended for sub expression');
 
     equal($('div.exprInner > input:visible:eq(0)').data('returnType'), 'NUMBER', 'The left type is a number');
@@ -194,55 +238,54 @@
   });
 
   test('Select2 is cleared and far left subexpression is active when subexpression is selected', function () {
-    selectOption('+');
+    testHelpers.selectOption('+');
 
     ok($('div.exprInner > input:visible:eq(0)').hasClass('subExprActive'), 'The left sub expression is active');
     equal($('input.subExpr').select2('val'), '', 'Select2 has been cleared');
   });
 
-  var visInSel = 'div.exprInner > *:visible';
   test('Static lists work as intended', function () {
-    selectOption('DaysBetween');
+    testHelpers.selectOption('DaysBetween');
     // should append the following items <span - DaysBetween(>, <input Date>, <span ,>, <input Date> and <span )>
     // first span
-    equal($(visInSel).eq(0).text(), 'DaysBetween', 'The first span display is correct');
+    equal($(VIS_IN_SEL).eq(0).text(), 'DaysBetween', 'The first span display is correct');
     equal($('div.exprInner > input:not(:visible)').eq(0).data('subExpr').expressionValue, 'daysBetween', 'Subexpression data is set');
     equal($('div.exprInner > input:not(:visible)').eq(0).data('subExpr').rightComponent.expandableInputs.length, 2, 'Right component is set');
 
     // first span
-    equal($(visInSel).eq(1).text(), '(', 'The second span display is correct');
+    equal($(VIS_IN_SEL).eq(1).text(), '(', 'The second span display is correct');
 
     //Date input
-    equal($(visInSel).eq(2).data('returnType'), 'TEMPORAL', 'The second input is correct');
+    equal($(VIS_IN_SEL).eq(2).data('returnType'), 'TEMPORAL', 'The second input is correct');
     //list seperator span
-    equal($(visInSel).eq(3).text(), ',', 'The comma seperator spans display is correct');
+    equal($(VIS_IN_SEL).eq(3).text(), ',', 'The comma seperator spans display is correct');
     //Date input
-    equal($(visInSel).eq(4).data('returnType'), 'TEMPORAL', 'The second input is correct');
+    equal($(VIS_IN_SEL).eq(4).data('returnType'), 'TEMPORAL', 'The second input is correct');
     //right paren span
-    equal($(visInSel).eq(5).text(), ')', 'The right paren spans display is correct');
+    equal($(VIS_IN_SEL).eq(5).text(), ')', 'The right paren spans display is correct');
   });
 
   test('When expression is complete select is disabled', function () {
-    selectOption('Number Field 1');
+    testHelpers.selectOption('Number Field 1');
     ok($('.select2-container-disabled').length, 'Select2 is disabled');
   });
 
   test('Subexpression can be grouped', function () {
-    selectOption('Grouping');
-    equal($(visInSel).eq(0).text(), '(', 'The second span display is correct');
-    equal($(visInSel).eq(1).data('returnType'), 'NUMBER', 'The return type of the grouped item is correct');
-    equal($(visInSel).eq(2).text(), ')', 'The right paren spans display is correct');
+    testHelpers.selectOption('Grouping');
+    equal($(VIS_IN_SEL).eq(0).text(), '(', 'The second span display is correct');
+    equal($(VIS_IN_SEL).eq(1).data('returnType'), 'NUMBER', 'The return type of the grouped item is correct');
+    equal($(VIS_IN_SEL).eq(2).text(), ')', 'The right paren spans display is correct');
   });
 
   test('Element with a multisized list appends an input', function () {
-    selectOption('Sum');
-    equal($(visInput).length, 1, 'There is one input for sum argument');
-    ok($(visInput).data('isMultiSized'), 'It has the isMultiSized data element set (1)');
-    selectOption('Number Field 1');
-    equal($(visInput).length, 1, 'There is another element appended');
-    ok($(visInput).data('isMultiSized'), 'It has the isMultiSized data element set (2)');
-    selectOption('Close List');
-    equal($(visInput).length, 0, 'The list can be closed');
+    testHelpers.selectOption('Sum');
+    equal($(VIS_INPUT).length, 1, 'There is one input for sum argument');
+    ok($(VIS_INPUT).data('isMultiSized'), 'It has the isMultiSized data element set (1)');
+    testHelpers.selectOption('Number Field 1');
+    equal($(VIS_INPUT).length, 1, 'There is another element appended');
+    ok($(VIS_INPUT).data('isMultiSized'), 'It has the isMultiSized data element set (2)');
+    testHelpers.selectOption('Close List');
+    equal($(VIS_INPUT).length, 0, 'The list can be closed');
   });
 
   module('jQuery#expressionBuilder non-default option (boolean start expression, etc.)', {
@@ -260,46 +303,46 @@
 
   test('Sub-expressions are added to select from config', 1, function() {
     //start expression return type can be changed
-    equal($(visInput).data('returnType'), 'BOOLEAN', 'sub expression input is BOOLEAN');
+    equal($(VIS_INPUT).data('returnType'), 'BOOLEAN', 'sub expression input is BOOLEAN');
   });
 
   test('Subexpressions with an Array of valid types filters correctly', 1, function() {
-    selectOption('equals');
+    testHelpers.selectOption('equals');
     var subExprWithNumberReturnType =
       _.filter(_.flatten(_.map(subExpressions, function (seg) { return seg.values; })), function (subExpr) { return _.contains(['NUMBER', 'TEMPORAL', 'TEXT', 'OPTION'], subExpr.returnType); }).length;
     equal($('li.select2-result:not(.select2-result-with-children)').length, subExprWithNumberReturnType + 3, 'Sub-expr fitlers with Array return type');
   });
 
   test('Subexpressions with an Array of valid types filters correctly', 1, function() {
-    selectOption('equals');
-    selectOption('Number Field 1');
-    equal($(visInput).eq(0).data('returnType'), 'NUMBER', 'The Other Operands type is filtered based on the selection of the first');
+    testHelpers.selectOption('equals');
+    testHelpers.selectOption('Number Field 1');
+    equal($(VIS_INPUT).eq(0).data('returnType'), 'NUMBER', 'The Other Operands type is filtered based on the selection of the first');
   });
   /*
   test('After adding a subExpression eb-subexpression-add is fired', 1, function() {
     this.divFixture.on('eb-subexpression-add', function (e, subExpression) {
       equal(subExpression.displayText, 'is before', 'eb-subexpression-add was fired and subexpression was passed back');
     });
-    selectOption('is before');
+    testHelpers.selectOption('is before');
   });
   */
   test('On complete event is fired', 1, function() {
     this.divFixture.on('eb-expression-complete', function (e, expression) {
       equal(expression, 'date_field_1 < date_field_2', 'eb-expresssion-complete was fired and expression was passed back');
     });
-    selectOption('is before');
-    selectOption('Date Field 1');
-    selectOption('Date Field 2');
+    testHelpers.selectOption('is before');
+    testHelpers.selectOption('Date Field 1');
+    testHelpers.selectOption('Date Field 2');
   });
 
   test('Pressing backspace if quickRemove option is set to false should not call back', function () {
-    selectOption('is before');
-    equal($(visInput).length, 2, 'There are two inputs before pressing backspace');
+    testHelpers.selectOption('is before');
+    equal($(VIS_INPUT).length, 2, 'There are two inputs before pressing backspace');
     //8 == backspace event
     var e = $.Event('keydown');
     e.which = 8;
     $('.select2-input').trigger(e);
-    equal($(visInput).length, 2, 'There are still two inputs after pressing backspace');
+    equal($(VIS_INPUT).length, 2, 'There are still two inputs after pressing backspace');
   });
 
   module('Test API', {
@@ -316,16 +359,16 @@
   });
 
   test('GetExpressionValue method returns the expression value', function() {
-    selectOption('is before');
-    selectOption('Date Field 1');
-    selectOption('Date Field 2');
+    testHelpers.selectOption('is before');
+    testHelpers.selectOption('Date Field 1');
+    testHelpers.selectOption('Date Field 2');
     equal(this.divFixture.expressionBuilder('getExpressionValue'), 'date_field_1 < date_field_2', 'The expression is correct on get');
   });
 
   test('GetJSON returns a json rep of current expression', function() {
-    selectOption('is before');
-    selectOption('Date Field 1');
-    selectOption('Date Field 2');
+    testHelpers.selectOption('is before');
+    testHelpers.selectOption('Date Field 1');
+    testHelpers.selectOption('Date Field 2');
     var json = this.divFixture.expressionBuilder('getExpressionJSON');
     //it is hard to test every property of the JSON, just test a few key ones
     equal(json.expressionValue, '<', 'Expresion value is set in json');
@@ -334,7 +377,7 @@
   });
 
   test('Can save templates', function() {
-    selectOption('is before');
+    testHelpers.selectOption('is before');
     this.divFixture.expressionBuilder('saveAsTemplate', 'Is Before Template');
     //equal(this.divFixture.expressionBuilder('getTemplates').length, 1, 'Template was added');
     equal(this.divFixture.expressionBuilder('getTemplates').displayName, 'Is Before Template', 'Template was added');
@@ -342,7 +385,7 @@
   });
 
   test('Expression return type can be changed', function() {
-    selectOption('is before');
+    testHelpers.selectOption('is before');
     this.divFixture.expressionBuilder('setReturnType', 'NUMBER');
     testReturnTypeIsNumber.call();
   });
@@ -351,54 +394,30 @@
     this.divFixture.on('eb-clear', function (e) {
       ok(true, 'Event was fired');
     });
-    selectOption('is before');
+    testHelpers.selectOption('is before');
     //verify 2 inputs before clear
-    equal($(visInput).length, 2, 'There are two inputs before clear');
+    equal($(VIS_INPUT).length, 2, 'There are two inputs before clear');
     this.divFixture.expressionBuilder('clearExpression');
-    equal($(visInput).length, 1, 'There is one input after');
-    equal($(visInput).data('returnType'), 'BOOLEAN', 'The return type is reset after clear');
+    equal($(VIS_INPUT).length, 1, 'There is one input after');
+    equal($(VIS_INPUT).data('returnType'), 'BOOLEAN', 'The return type is reset after clear');
   });
-
-  function assertStartingState (startingType) {
-    equal($(visInput).length, 1, 'There is 1 input');
-    equal($(visInput).data('returnType'), startingType, 'The input has the starting return type');
-    ok($(visInput).hasClass('subExprActive'), 'sub expression input has subExprActive class');
-  }
-
-  /**
-   * Since back happen through multiple actions (pressing back button or backspace within SE Select),
-   * we extract this to a helper.
-   * 
-   * @param  {function} backAction action that makes back happen
-   * @return {void}
-   */
-  function testBack (backAction) {
-    selectOption('is before');
-    selectOption('Date Field 1');
-    selectOption('Date Field 2');
-    equal($(visInput).length, 0, 'There are no inputs before calling back');
-    backAction();
-    //back should remove Date Field 2 and replace it with a TEMPORAL typed input
-    equal($(visInput).length, 1, 'There is 1 input after calling back');
-    equal($(visInput).eq(0).data('returnType'), 'TEMPORAL', 'The input put back has the return type still set');
-  }
 
   test('Back functionality works', function() {
     var backAction = _.bind(this.divFixture.expressionBuilder, this.divFixture, 'back');
-    testBack(backAction);
+    testHelpers.testBack(backAction);
     //pressing back again should replace other date field
     this.divFixture.expressionBuilder('back');
-    equal($(visInput).length, 2, 'There are 2 input after calling back');
+    equal($(VIS_INPUT).length, 2, 'There are 2 input after calling back');
     //pressing back again returns it to the starting state
     this.divFixture.expressionBuilder('back');
-    assertStartingState('BOOLEAN');
+    testHelpers.assertStartingState('BOOLEAN');
   });
 
   test('eb-back event is triggered', function() {
     this.divFixture.on('eb-back', function (e) {
       ok(true, 'Event was fired');
     });
-    selectOption('is before');
+    testHelpers.selectOption('is before');
     this.divFixture.expressionBuilder('back');
   });
 
@@ -407,6 +426,6 @@
     var e = $.Event('keydown');
     e.which = 8;
     var backAction = _.bind($().trigger, $('.select2-input'), e);
-    testBack(backAction);
+    testHelpers.testBack(backAction);
   });
 }(jQuery, _));
