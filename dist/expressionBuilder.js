@@ -1,4 +1,4 @@
-/*! jQuery Expression Builder - v0.1.0 - 2014-05-05
+/*! jQuery Expression Builder - v0.1.0 - 2014-05-08
 * https://github.com/jonmbake/jquery-expression-builder
 * Copyright (c) 2014 Jon Bake; Licensed MIT */
 
@@ -49,6 +49,9 @@
     'quickRemove': true
   };
 
+  function escapeHTML (text) {
+    return $('<div/>').text(text).html();
+  }
   /**
    * The base prototype for all select elements, including groupings and sub-exressions.
    * @constructor
@@ -142,7 +145,7 @@
   };
   
   SubExpressionSelect.prototype.getSignature = function () {
-    return (this.leftType ? '{' + this.leftType + '} ' : '') + this.displayName + (this.rightType ? ' {' + this.rightType + '} ' : '');
+    return (this.leftType ? '<span class="label label-info">' + escapeHTML(this.leftType) + '</span>' : '') + '<span class="label label-danger">' + escapeHTML(this.displayName) + '</span>' + (this.rightType ? ' <span class="label label-info">' + escapeHTML(this.rightType) + '</span>' : '');
   };
   /**
    * A template select element.
@@ -1032,7 +1035,7 @@
         if (highlightedElement) {
           s$('span.helpDescription').text(highlightedElement.getDescription());
           if (highlightedElement.getSignature instanceof Function) {
-            s$('span.seSignature').text(highlightedElement.getSignature());
+            s$('span.seSignature').html(highlightedElement.getSignature());
           }
         } else {
           s$('span.helpDescription').text('N/A');
