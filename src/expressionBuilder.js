@@ -1010,17 +1010,6 @@
         query: _.bind(function(query) {
           var data = {};
           data.results = this.selectElementCollection.filter(query);
-          //the quick add option will automatically add the element when it is the only option available
-          var resultIds = _.chain(data.results)
-            .map(function (r) {
-              return r.id || _.pluck(r.children, 'id');
-            })
-            .flatten()
-            .value();
-          if (this.options.quickAdd && resultIds.length === 1) {
-            subExprSelect.select2('val', '').select2('close');
-            this.selectElementCollection.getById(resultIds[0]).onSelect();
-          }
           query.callback (data);
         }, this)
       });

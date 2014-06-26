@@ -47,7 +47,6 @@ The second argument to the expression builder is object of options.  The followi
 Option             | Description                                                         | Defaults
 ------------------ | ------------------------------------------------------------------- | ---------
 returnType         | Expression return type                                              | NUMBER
-quickAdd           | Will automatically add the expression when text entered in the sub-expression select returns only a single match.  This is good for single character operators and effectively saves an <Enter> keystroke.                                      | true
 quickRemove        | Will remove previously entered sub-expression when pressing <Backspace> within empty sub-expression select input box.                                      | true
 templateURL        | URL to POST to when saving a template or GET when getting templates | If a URL is not provided, will use local storage
 expressionURL      | URL to get sub-expression values from.  This will be merged with the set of sub-expressions passed in as arguments  | empty
