@@ -1102,6 +1102,10 @@
       }
       this.s$().trigger('eb-back');
     },
+    isExpressionComplete: function () {
+        var inputToFocus = this.s$('div.exprInner > input:visible:eq(0)');
+        return inputToFocus.length == 0;
+    },
    getTemplates: function () {
     if (this.options.templateURL) {
       var returnVal;
@@ -1173,6 +1177,9 @@
     },
     back: function () {
       this.data('expressionBuilder').back();
+    },
+    isExpressionComplete: function () {
+      return this.data('expressionBuilder').isExpressionComplete();
     },
     saveAsTemplate: function (templateName) {
       this.data('expressionBuilder').saveAsTemplate(templateName);
