@@ -1099,6 +1099,7 @@
       var $hiddenInput = this.s$('.exprInner input:not(:visible)').last();
       if ($hiddenInput && $hiddenInput.data('subExpr')) {
         $hiddenInput.data('subExpr').remove();
+        this.subExprSelect.select2('data', null).select2('enable', true).select2('open');
       }
       this.s$().trigger('eb-back');
     },
