@@ -82,8 +82,9 @@ Method             | Description                                                
 ------------------ | -------------------------------------------------------------------------------------------------------------- | ---------
 getExpressionValue | Get the expression value of the current expression.                                                            | NONE
 getExpressionJSON  | Get the JSON representation of the current expression.  This is what gets saved when persisting a template.    | NONE
-clearExpression    | Reset the current expression back to its starting state.                                                       | NONE 
-back               | Pops off the last added sub-expression.                                                                        | NONE 
+isExpressionComplete  | An API to check if expression is complete or not.    | NONE
+clearExpression    | Reset the current expression back to its starting state.                                                       | NONE
+back               | Pops off the last added sub-expression.                                                                        | NONE
 saveAsTemplate     | Save the current expression as a template                                                                      | NONE
 setReturnType      | Set the expression return type.                                                                                | type
 
@@ -93,7 +94,7 @@ setReturnType      | Set the expression return type.                            
 ## Known Issues
 * A really long expression expands beyond containing div
 
-## To Do 
+## To Do
 * Support for ignoring sub-expression when saving
 * Support for managing saved templates
 * Upgrade Grunt to 0.4+

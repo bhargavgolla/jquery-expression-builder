@@ -148,7 +148,7 @@
     /**
      * Since back happen through multiple actions (pressing back button or backspace within SE Select),
      * we extract this to a helper.  Have to keep that code DRY.
-     * 
+     *
      * @param  {function} backAction action that makes back happen
      * @return {void}
      */
@@ -363,6 +363,14 @@
     testHelpers.selectOption('Date Field 1');
     testHelpers.selectOption('Date Field 2');
     equal(this.divFixture.expressionBuilder('getExpressionValue'), 'date_field_1 < date_field_2', 'The expression is correct on get');
+  });
+
+  test('isExpressionComplete method checks if the expression is complete or not.', function() {
+    ok(!this.divFixture.expressionBuilder('isExpressionComplete'), 'The expression is incomplete');
+    testHelpers.selectOption('is before');
+    testHelpers.selectOption('Date Field 1');
+    testHelpers.selectOption('Date Field 2');
+    ok(this.divFixture.expressionBuilder('isExpressionComplete'), 'The expression is complete');
   });
 
   test('GetJSON returns a json rep of current expression', function() {
